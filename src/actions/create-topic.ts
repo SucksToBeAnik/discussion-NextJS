@@ -3,7 +3,7 @@
 import { Topic } from "@prisma/client";
 import { auth } from "@/auth";
 import { db } from "@/db";
-import path from "@/path";
+import path from "@/paths";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -52,7 +52,6 @@ export async function createTopic(
     };
   }
 
-  
   // after validation succeeded
   let topic: Topic;
   try {
@@ -65,15 +64,15 @@ export async function createTopic(
   } catch (err: unknown) {
     if (err instanceof Error) {
       return { errors: { _form: [err.message] } };
-    }else{
+    } else {
       return {
-        errors:{
-          _form:["Something went wrong!"]
-        }
-      }
+        errors: {
+          _form: ["Something went wrong!"],
+        },
+      };
     }
   }
 
-  revalidatePath(path.home())
+  revalidatePath(path.home());
   redirect(path.topicShow(topic.slug));
 }

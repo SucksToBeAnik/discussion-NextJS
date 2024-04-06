@@ -12,21 +12,11 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-
 import { useFormState } from "react-dom";
+import FormButton from "../common/form-button";
 
 const TopicCreateForm = () => {
   const [formState, action] = useFormState(actions.createTopic, { errors: {} });
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(()=>{
-    if(formState.errors){
-      setIsLoading(false)
-    }
-  },[formState])
-  
-
 
   const nameError = (
     <div className="text-red-400">{formState.errors.name?.join(", ")}</div>
@@ -65,16 +55,9 @@ const TopicCreateForm = () => {
                 {formState.errors._form.join(", ")}
               </p>
             )}
-            <Button
-              type="submit"
-              size="sm"
-              color="primary"
-              variant="bordered"
-              className="text-md"
-              onClick={()=>setIsLoading(true)}
-            >
-              <span>Submit {isLoading && <Spinner size="sm"/>}</span>
-            </Button>
+            <FormButton>
+              Save
+            </FormButton>
           </div>
         </form>
       </PopoverContent>
